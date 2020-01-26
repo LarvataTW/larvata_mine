@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "larvata_mine"
+require "dotenv"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
@@ -10,5 +11,9 @@ RSpec.configure do |config|
 
   config.expect_with :rspec do |c|
     c.syntax = :expect
+  end
+
+  config.before(:context, :with_env) do
+    Dotenv.load
   end
 end

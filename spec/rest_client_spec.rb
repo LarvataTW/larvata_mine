@@ -1,6 +1,5 @@
 require "larvata_mine/rest_client"
 require "webmock/rspec"
-require "dotenv"
 
 RSpec.describe LarvataMine::RestClient do
   context "without a Redmine API key" do
@@ -17,31 +16,31 @@ RSpec.describe LarvataMine::RestClient do
     end
   end
 
-  context "with an invalid Redmine API key" do
-    it "responds with a redirect to login" do
-      Dotenv.load
-      api_key = "fake"
-      client = LarvataMine::RestClient.new(api_key: api_key)
+  context "given environment variables", :with_env do
+    context "with an invalid Redmine API key" do
+      it "responds with a redirect to login" do
+        api_key = "fake"
+        client = LarvataMine::RestClient.new(api_key: api_key)
 
-      stub_request(:get, "#{client.base_url}/issues")
-        .with(headers: { "X-Redmine-API-Key" => api_key })
-        .to_return(status: 302)
-      response = client.all_issues
+        stub_request(:get, "#{client.base_url}/issues")
+          .with(headers: { "X-Redmine-API-Key" => api_key })
+          .to_return(status: 302)
+        response = client.all_issues
 
-      expect(response.code).to eq 302
+        expect(response.code).to eq 302
+      end
     end
-  end
 
-  context "with a valid Redmine API key" do
-    it "gets all issues" do
-      Dotenv.load
-      client = LarvataMine::RestClient.new
+    context "with a valid Redmine API key" do
+      it "gets all issues" do
+        client = LarvataMine::RestClient.new
 
-      stub_request(:get, "#{client.base_url}/issues")
-        .with(headers: { "X-Redmine-API-Key" => client.api_key })
-      response = client.all_issues
+        stub_request(:get, "#{client.base_url}/issues")
+          .with(headers: { "X-Redmine-API-Key" => client.api_key })
+        response = client.all_issues
 
-      expect(response.code).to eq 200
+        expect(response.code).to eq 200
+      end
     end
   end
 end
