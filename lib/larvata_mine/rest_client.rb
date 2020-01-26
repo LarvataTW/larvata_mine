@@ -9,6 +9,10 @@ module LarvataMine
       @client = HTTP.headers("X-Redmine-API-Key" => api_key)
     end
 
+    def all_issues
+      @client.get("#{base_url}/issues")
+    end
+
     private
 
     def verify_config(**options)

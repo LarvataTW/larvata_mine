@@ -32,4 +32,16 @@ RSpec.describe LarvataMine::RestClient do
     end
   end
 
+  context "with a valid Redmine API key" do
+    it "gets all issues" do
+      Dotenv.load
+      client = LarvataMine::RestClient.new
+
+      stub_request(:get, "#{client.base_url}/issues")
+        .with(headers: { "X-Redmine-API-Key" => client.api_key })
+      response = client.all_issues
+
+      expect(response.code).to eq 200
+    end
+  end
 end
