@@ -10,7 +10,7 @@ module LarvataMine
     end
 
     def all_issues
-      @client.get("#{base_url}/issues")
+      @client.get("#{base_url}/issues.json")
     end
 
     private

@@ -23,7 +23,7 @@ RSpec.describe LarvataMine::RestClient do
         api_key = "fake"
         client = LarvataMine::RestClient.new(api_key: api_key)
 
-        stub_request(:get, "#{client.base_url}/issues")
+        stub_request(:get, "#{client.base_url}/issues.json")
           .with(headers: { "X-Redmine-API-Key" => api_key })
           .to_return(status: 302)
         response = client.all_issues
@@ -36,7 +36,7 @@ RSpec.describe LarvataMine::RestClient do
       it "gets all issues" do
         client = LarvataMine::RestClient.new
 
-        stub_request(:get, "#{client.base_url}/issues")
+        stub_request(:get, "#{client.base_url}/issues.json")
           .with(headers: { "X-Redmine-API-Key" => client.api_key })
         response = client.all_issues
 
