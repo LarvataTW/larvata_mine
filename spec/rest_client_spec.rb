@@ -33,6 +33,17 @@ RSpec.describe LarvataMine::RestClient do
     end
 
     context "with a valid Redmine API key" do
+      it "gets issues by project ID" do
+        id = "s-maintenance"
+        client = LarvataMine::RestClient.new
+
+        stub_request(:get, "#{client.base_url}/issues.json?project_id=#{id}")
+          .with(headers: { "X-Redmine-API-Key" => client.api_key })
+        response = client.issues_by_project_id(id)
+
+        expect(response.code).to eq 200
+      end
+
       it "gets all issues" do
         client = LarvataMine::RestClient.new
 
