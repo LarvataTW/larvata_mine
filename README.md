@@ -1,5 +1,5 @@
 [![Build
-Status](https://travis-ci.org/FTLam11/larvata_mine.svg?branch=master)](https://travis-ci.org/FTLam11/larvata_mine)
+Status](https://api.travis-ci.com/FTLam11/larvata_mine.svg?branch=master)](https://travis-ci.org/FTLam11/larvata_mine)
 
 # LarvataMine
 
