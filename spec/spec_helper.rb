@@ -1,5 +1,6 @@
 require "bundler/setup"
 require "larvata_mine"
+require "support/maintenance_fake"
 
 RSpec.configure do |config|
   # Enable flags like --only-failures and --next-failure
