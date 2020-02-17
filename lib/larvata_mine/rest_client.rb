@@ -9,12 +9,13 @@ module LarvataMine
       @client = HTTP.headers("X-Redmine-API-Key" => api_key).timeout(timeout)
     end
 
-    def issues_by_project_id(id)
-      @client.get("#{base_url}/issues.json?project_id=#{id}")
+    def insert_maintenance(record)
+      body = MaintenanceDecorator.new(record)
+      @client.post("#{base_url}/issues.json", body: body)
     end
 
-    def all_issues
-      @client.get("#{base_url}/issues.json")
+    def issues_by_project_id(id)
+      @client.get("#{base_url}/issues.json?project_id=#{id}")
     end
 
     private
