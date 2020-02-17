@@ -33,28 +33,14 @@ RSpec.describe LarvataMine::RestClient do
   end
 
   context "with a valid Redmine API key" do
-    xit "creates a maintenance issue in Redmine" do
+    it "creates a maintenance issue in Redmine" do
+      issue = LarvataMine::MaintenanceDecorator.new(MaintenanceFake.new)
       client = LarvataMine::RestClient.new
-      params = {
-        project_id: "s-maintenance",
-        tracker_id: 4,
-        status_id: 1,
-        subject: "",
-        description: "",
-        assigned_to_id: "",
-        parent_issue_id: "",
-        custom_fields: [
-          {
-            id: 1,
-            name: "name",
-            value: "1",
-          },
-        ],
-      }
 
       stub_request(:post, "#{client.base_url}/issues.json")
-        .with(body: params, headers: { "X-Redmine-API-Key" => client.api_key })
-      response = client.insert_maintenance(params)
+        .with(body: issue.to_json, headers: { "X-Redmine-API-Key" => client.api_key })
+        .to_return(status: 201)
+      response = client.insert_maintenance(issue)
 
       expect(response.code).to eq 201
     end

@@ -1,4 +1,5 @@
 require 'http'
+require 'larvata_mine/maintenance_decorator'
 
 module LarvataMine
   class RestClient
@@ -11,7 +12,7 @@ module LarvataMine
 
     def insert_maintenance(record)
       body = MaintenanceDecorator.new(record)
-      @client.post("#{base_url}/issues.json", body: body)
+      @client.post("#{base_url}/issues.json", body: body.to_json)
     end
 
     def issues_by_project_id(id)
