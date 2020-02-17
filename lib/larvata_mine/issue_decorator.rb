@@ -19,5 +19,9 @@ module LarvataMine
     def assigned_to_id
       raise "Not implemented, please override"
     end
+
+    def as_json(*)
+      raise "Not implemented, please override"
+    end
   end
 end
