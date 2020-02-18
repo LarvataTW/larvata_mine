@@ -12,7 +12,7 @@ module LarvataMine
 
     def insert_maintenance(record)
       body = MaintenanceDecorator.new(record)
-      @client.post("#{base_url}/issues.json", body: body.to_json)
+      @client.post("#{base_url}/issues.json", json: body.as_json)
     end
 
     def issues_by_project_id(id)
