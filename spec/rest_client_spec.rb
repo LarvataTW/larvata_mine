@@ -39,7 +39,7 @@ RSpec.describe LarvataMine::RestClient do
       client = LarvataMine::RestClient.new
 
       stub_request(:post, "#{client.base_url}/issues.json")
-        .with(body: issue.as_json, headers: { "X-Redmine-API-Key" => client.api_key })
+        .with(body: { issue: issue.as_json }, headers: { "X-Redmine-API-Key" => client.api_key })
         .to_return(status: 201)
       response = client.insert_maintenance(issue)
 
