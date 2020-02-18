@@ -36,7 +36,7 @@ module LarvataMine
         {
           id: 2,
           name: maintenance_fields[:maintenance_typing],
-          value: maintenance.typing_i18n,
+          value: typing_i18n,
         },
         {
           id: 3,
