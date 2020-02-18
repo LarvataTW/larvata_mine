@@ -89,7 +89,7 @@ module LarvataMine
         <<~TEXT
           * 報修項目#{idx}
           # 位置：#{item.location_name}
-          # # 類別：#{item.maintenance_name}
+          # # 類別：#{item.category_name}
           # #
           # 描述：#{item.content}
         TEXT

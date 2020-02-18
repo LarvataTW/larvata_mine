@@ -34,7 +34,8 @@ RSpec.describe LarvataMine::RestClient do
 
   context "with a valid Redmine API key" do
     it "creates a maintenance issue in Redmine" do
-      issue = LarvataMine::MaintenanceDecorator.new(MaintenanceFake.new)
+      fake = MaintenanceFake.new
+      issue = LarvataMine::MaintenanceDecorator.new(fake)
       client = LarvataMine::RestClient.new
 
       stub_request(:post, "#{client.base_url}/issues.json")

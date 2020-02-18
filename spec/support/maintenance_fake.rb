@@ -1,16 +1,15 @@
-require "forwardable"
+require "ostruct"
 
 class ItemFake < Struct.new(:content, :category_name, :location_name); end
 
 class MaintenanceFake
-  extend Forwardable
-
   attr_reader :maintenance_number, :typing_i18n, :contact_number,
-    :contact_time_text, :maintenance_items, :maintenance_fields
+    :contact_time_text, :maintenance_items, :maintenance_fields, :double
 
-  def_delegators :@double, :name, :unit_number
+  ASSOCIATIONS = %i(property unit user).freeze
+  ASSOCIATIONS.each { |ass| alias_method ass, :double }
 
-  def new
+  def initialize
     @maintenance_number = "GG1234"
     @typing_i18n = "修繕（個別戶）"
     @contact_number = "0904098127"
