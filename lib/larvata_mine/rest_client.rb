@@ -22,10 +22,19 @@ module LarvataMine
     private
 
     def verify_config(**options)
-      @api_key = options.fetch(:api_key) { ENV["REDMINE_API_KEY"] }
-      @base_url = options.fetch(:base_url) { ENV["REDMINE_BASE_URL"] }
-      @timeout = options.fetch(:timeout) { ENV["REDMINE_REQUEST_TIMEOUT"].to_i }
+      options = default_options.merge!(options)
+      @api_key = options[:api_key]
+      @base_url = options[:base_url]
+      @timeout = options[:timeout]
       raise ArgumentError, "Missing API key and/or base URL" unless api_key && base_url
+    end
+
+    def default_options
+      {
+        api_key: ENV["REDMINE_API_KEY"],
+        base_url: ENV["REDMINE_BASE_URL"],
+        timeout: ENV["REDMINE_REQUEST_TIMEOUT"].to_i,
+      }
     end
   end
 end
