@@ -6,7 +6,7 @@ class MaintenanceFake
   extend Forwardable
 
   attr_reader :maintenance_number, :typing_i18n, :contact_number,
-    :contact_time_text, :maintenance_items
+    :contact_time_text, :maintenance_items, :maintenance_fields
 
   def_delegators :@double, :name, :unit_number
 
@@ -20,5 +20,12 @@ class MaintenanceFake
       ItemFake.new("Broken water heater", "水電", "其他"),
       ItemFake.new("Living room electrical outage", "水電", "客廳"),
     ]
+    @maintenance_fields = {
+      maintenance_number: "修繕案件單號",
+      maintenance_typing: "案件類別",
+      property_name: "建案名稱",
+      unit_number: "房屋編號",
+      user_name: "顧客名稱",
+    }
   end
 end

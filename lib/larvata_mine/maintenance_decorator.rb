@@ -30,27 +30,27 @@ module LarvataMine
       [
         {
           id: 1,
-          name: "maintenance_number",
+          name: maintenance_fields[:maintenance_number],
           value: maintenance_number,
         },
         {
           id: 2,
-          name: "maintenance_typing",
+          name: maintenance_fields[:maintenance_typing],
           value: maintenance.typing_i18n,
         },
         {
           id: 3,
-          name: "property_name",
+          name: maintenance_fields[:property_name],
           value: property_name,
         },
         {
           id: 4,
-          name: "unit_number",
+          name: maintenance_fields[:unit_number],
           value: unit_number,
         },
         {
           id: 5,
-          name: "customer_name",
+          name: maintenance_fields[:customer_name],
           value: customer_name,
         },
       ]
