@@ -92,7 +92,7 @@ module LarvataMine
       "\n【報修項目】\n" <<
       maintenance_items.map.with_index do |item, idx|
         <<~TEXT
-          * 報修項目#{idx}
+          * 報修項目#{idx + 1}
           # 位置：#{item.location_name}
           # 類別：#{item.category_name}
           # 描述：#{item.content}
