@@ -22,9 +22,11 @@ RSpec.describe LarvataMine::RestClient do
       api_key = "fake"
       id = "s-maintenance"
       client = LarvataMine::RestClient.new(api_key: api_key)
+      params = { project_id: id }.merge!(client.send(:query_defaults))
 
-      stub_request(:get, "#{client.base_url}/issues.json?project_id=#{id}")
+      stub_request(:get, "#{client.base_url}/issues.json")
         .with(headers: { "X-Redmine-API-Key" => api_key })
+        .with(query: params)
         .to_return(status: 302)
       response = client.issues_by_project_id(id)
 
@@ -49,9 +51,11 @@ RSpec.describe LarvataMine::RestClient do
     it "gets issues by project ID" do
       id = "s-maintenance"
       client = LarvataMine::RestClient.new
+      params = { project_id: id }.merge!(client.send(:query_defaults))
 
-      stub_request(:get, "#{client.base_url}/issues.json?project_id=#{id}")
+      stub_request(:get, "#{client.base_url}/issues.json")
         .with(headers: { "X-Redmine-API-Key" => client.api_key })
+        .with(query: params)
       response = client.issues_by_project_id(id)
 
       expect(response.code).to eq 200
