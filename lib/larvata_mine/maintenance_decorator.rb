@@ -3,10 +3,12 @@ require "larvata_mine/issue_decorator"
 module LarvataMine
   class MaintenanceDecorator < IssueDecorator
     def project_id
+      # TODO: Need to pass in
       "s-maintenance"
     end
 
     def tracker_id
+      # TODO: Need to pass in
       4
     end
 
@@ -23,6 +25,7 @@ module LarvataMine
     end
 
     def assigned_to_id
+      # TODO: Need to pass in
       1
     end
 
@@ -86,13 +89,12 @@ module LarvataMine
     def child_descriptions
       return unless maintenance_items
 
-      "【報修項目】" <<
+      "\n【報修項目】\n" <<
       maintenance_items.map.with_index do |item, idx|
         <<~TEXT
           * 報修項目#{idx}
           # 位置：#{item.location_name}
-          # # 類別：#{item.category_name}
-          # #
+          # 類別：#{item.category_name}
           # 描述：#{item.content}
         TEXT
       end.join("\n")
