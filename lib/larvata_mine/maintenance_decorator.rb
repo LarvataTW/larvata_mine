@@ -50,7 +50,7 @@ module LarvataMine
         },
         {
           id: 5,
-          name: maintenance_fields[:customer_name],
+          name: maintenance_fields[:user_name],
           value: customer_name,
         },
       ]
@@ -84,6 +84,8 @@ module LarvataMine
     end
 
     def child_descriptions
+      return unless maintenance_items
+
       "【報修項目】" <<
       maintenance_items.map.with_index do |item, idx|
         <<~TEXT
