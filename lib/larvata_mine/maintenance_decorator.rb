@@ -3,13 +3,11 @@ require "larvata_mine/issue_decorator"
 module LarvataMine
   class MaintenanceDecorator < IssueDecorator
     def project_id
-      # TODO: Need to pass in
-      "s-maintenance"
+      redmine_project_id
     end
 
     def tracker_id
-      # TODO: Need to pass in
-      4
+      redmine_tracker_id
     end
 
     def status_id
@@ -22,11 +20,6 @@ module LarvataMine
 
     def description
       main_description << child_descriptions
-    end
-
-    def assigned_to_id
-      # TODO: Need to pass in
-      1
     end
 
     def custom_fields
@@ -66,7 +59,6 @@ module LarvataMine
         status_id: 1,
         subject: subject,
         description: description,
-        assigned_to_id: assigned_to_id,
         custom_fields: custom_fields,
       }
     end

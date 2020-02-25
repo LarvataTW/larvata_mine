@@ -4,7 +4,8 @@ class ItemFake < Struct.new(:content, :category_name, :location_name); end
 
 class MaintenanceFake
   attr_reader :maintenance_number, :typing_i18n, :contact_number,
-    :contact_time_text, :maintenance_items, :maintenance_fields, :double
+    :contact_time_text, :maintenance_items, :maintenance_fields, :double,
+    :redmine_project_id, :redmine_tracker_id
 
   ASSOCIATIONS = %i(property unit user).freeze
   ASSOCIATIONS.each { |ass| alias_method ass, :double }
@@ -26,5 +27,7 @@ class MaintenanceFake
       unit_number: "房屋編號",
       user_name: "顧客名稱",
     }
+    @redmine_project_id = "s-maintenance"
+    @redmine_tracker_id = "修繕單"
   end
 end
