@@ -1,7 +1,7 @@
 module LarvataMine
   class IssueDecorator < SimpleDelegator
     def tracker_id
-      raise "Not implemented, please override"
+      raise NotImplementedError
     end
 
     def status_id
@@ -9,19 +9,19 @@ module LarvataMine
     end
 
     def subject
-      raise "Not implemented, please override"
+      raise NotImplementedError
     end
 
     def description
-      raise "Not implemented, please override"
+      raise NotImplementedError
     end
 
     def assigned_to_id
-      raise "Not implemented, please override"
+      raise NotImplementedError
     end
 
     def as_json(*)
-      raise "Not implemented, please override"
+      raise NotImplementedError
     end
   end
 end
