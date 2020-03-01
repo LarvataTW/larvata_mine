@@ -10,10 +10,6 @@ module LarvataMine
       redmine_tracker_id
     end
 
-    def status_id
-      1
-    end
-
     def subject
       "[#{maintenance_number} - #{property_name} #{unit_number}]"
     end
