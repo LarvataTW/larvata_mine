@@ -1,7 +1,10 @@
 require "larvata_mine/issue_decorator"
+require "forwardable"
 
 module LarvataMine
   class MaintenanceDecorator < IssueDecorator
+    extend Forwardable
+
     def project_id
       redmine_project_id
     end
@@ -88,16 +91,8 @@ module LarvataMine
       end.join("\n")
     end
 
-    def property_name
-      property.name
-    end
-
-    def unit_number
-      unit.unit_number
-    end
-
-    def customer_name
-      user.name
-    end
+    def_delegator :property, :name, :property_name
+    def_delegator :unit, :unit_number
+    def_delegator :user, :name, :customer_name
   end
 end
