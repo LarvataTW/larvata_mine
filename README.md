@@ -24,7 +24,11 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Read the specs as always!
+
+`LarvataMine::RestClient` has three configurable parameters: `api_key`,
+`base_url`, and `timeout`. These parameters can be read from environment
+variables or passed in directly to the initializer.
 
 ## Development
 
