@@ -17,6 +17,10 @@ module LarvataMine
       unit.nil? ? '(公設)' : unit.unit_number
     end
 
+    def customer_name
+      user.nil? ? '--' : user.name
+    end
+
     def subject
       "[#{maintenance_number} - #{property_name} #{unit_number}]"
     end
@@ -76,7 +80,7 @@ module LarvataMine
         * 案件類別：#{typing_i18n}
         * 建案名稱：#{property_name}
         * 顧客姓名：#{customer_name}
-        * 聯絡電話：#{contact_number}
+        * 聯絡電話：#{contact_number || '--'}
         * 方便時段：#{contact_time_text}
       TEXT
     end
@@ -96,6 +100,5 @@ module LarvataMine
     end
 
     def_delegator :property, :name, :property_name
-    def_delegator :user, :name, :customer_name
   end
 end
