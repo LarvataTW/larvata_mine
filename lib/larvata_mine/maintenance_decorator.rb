@@ -13,6 +13,10 @@ module LarvataMine
       redmine_tracker_id
     end
 
+    def unit_number
+      unit.nil? ? '(公設)' : unit.unit_number
+    end
+
     def subject
       "[#{maintenance_number} - #{property_name} #{unit_number}]"
     end
@@ -92,7 +96,6 @@ module LarvataMine
     end
 
     def_delegator :property, :name, :property_name
-    def_delegator :unit, :unit_number
     def_delegator :user, :name, :customer_name
   end
 end

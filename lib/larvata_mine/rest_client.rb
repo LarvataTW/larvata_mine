@@ -25,6 +25,11 @@ module LarvataMine
       @client.get("#{base_url}/issues.json", params: options)
     end
 
+    def get_projects(options = {})
+      options = query_defaults.merge(options)
+      @client.get("#{base_url}/projects.json", params: options)
+    end
+
     private
 
     def client_defaults
