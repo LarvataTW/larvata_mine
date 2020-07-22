@@ -14,7 +14,7 @@ module LarvataMine
     end
 
     def unit_number
-      unit.nil? ? '(公設)' : unit.unit_number
+      unit.nil? ? '--' : unit.unit_number
     end
 
     def customer_name
@@ -81,7 +81,7 @@ module LarvataMine
         * 建案名稱：#{property_name}
         * 顧客姓名：#{customer_name}
         * 聯絡電話：#{contact_number || '--'}
-        * 方便時段：#{contact_time_text}
+        * 方便時段：#{contact_time_text || '--'}
       TEXT
     end
 
