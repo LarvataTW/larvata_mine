@@ -59,7 +59,7 @@ module LarvataMine
       ]
     end
 
-    def as_json(*)
+    def as_json(image_token)
       {
         project_id: project_id,
         tracker_id: tracker_id,
@@ -67,6 +67,7 @@ module LarvataMine
         subject: subject,
         description: description,
         custom_fields: custom_fields,
+        uploads: image_json(image_token)
       }
     end
 
@@ -81,7 +82,7 @@ module LarvataMine
         * 建案名稱：#{property_name}
         * 顧客姓名：#{customer_name}
         * 聯絡電話：#{contact_number || '--'}
-        * 方便時段：#{contact_time_text || '--'}
+        * 方便時段：#{contact_time_text}
       TEXT
     end
 
@@ -97,6 +98,16 @@ module LarvataMine
           # 描述：#{item.content}
         TEXT
       end.join("\n")
+    end
+
+    def image_json(token)
+      return unless token.present?
+
+      attachments.reduce([]) do |ary, image|
+        ary << { token: token[image.id],
+                 filename: image.attachment_file_name,
+                 content_type: image.attachment_content_type }
+      end
     end
 
     def_delegator :property, :name, :property_name
