@@ -24,7 +24,7 @@ module LarvataMine
     end
 
     def issues_by_project_id(id, options = {})
-      options = query_defaults.merge!(options)
+      options = query_defaults.merge(options)
       options[:project_id] = id
       @client.get("#{base_url}/issues.json", params: options)
     end
@@ -36,12 +36,12 @@ module LarvataMine
 
     def get_custom_field(options = {})
       options = query_defaults.merge(options)
-      @client.get("#{base_url}/trackers.json", params: options)
+      @client.get("#{base_url}/custom_fields.json", params: options)
     end
 
     def get_tracker(options = {})
       options = query_defaults.merge(options)
-      @client.get("#{base_url}/custom_field.json", params: options)
+      @client.get("#{base_url}/trackers.json", params: options)
     end
 
     def free_search(target, options = {})
