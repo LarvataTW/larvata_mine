@@ -24,14 +24,14 @@ module LarvataMine
       @client.post("#{base_url}/issues.json", json: { issue: body.as_json(@image_token) })
     end
 
+    def insert_estimate_item(record, custom_fields = {})
+      body = EstimateItemDecorator.new(record)
+      @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
+    end
+
     def insert_properties(record)
       body = PropertiesDecorator.new(record)
       @client.post("#{base_url}/projects.json", json: { project: body.as_json })
-    end
-
-    def insert_estimate_item(record, custom_fields = {})
-      body = EstimateItemDecorator.new(record)
-      @client.post("#{base_url}/projects.json", json: { issue: body.as_json(custom_fields) })
     end
 
     def issues_by_project_id(id, options = {})
