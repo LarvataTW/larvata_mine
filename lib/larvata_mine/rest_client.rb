@@ -1,6 +1,7 @@
 require 'http'
 require 'larvata_mine/maintenance_decorator'
 require 'larvata_mine/properties_decorator'
+require 'larvata_mine/estimate_item'
 
 module LarvataMine
   class RestClient
