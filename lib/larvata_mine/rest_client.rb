@@ -26,7 +26,12 @@ module LarvataMine
 
     def insert_properties(record)
       body = PropertiesDecorator.new(record)
-      @client.post("#{base_url}/projects.json", json: { project: body.project_json })
+      @client.post("#{base_url}/projects.json", json: { project: body.as_json })
+    end
+
+    def insert_estimate_item(record, custom_fields = {})
+      body = EstimateItemDecorator.new(record)
+      @client.post("#{base_url}/projects.json", json: { issue: body.as_json(custom_fields) })
     end
 
     def issues_by_project_id(id, options = {})
