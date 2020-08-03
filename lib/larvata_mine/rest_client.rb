@@ -1,5 +1,6 @@
 require 'http'
 require 'larvata_mine/maintenance_decorator'
+require 'larvata_mine/properties_decorator'
 
 module LarvataMine
   class RestClient
@@ -21,6 +22,11 @@ module LarvataMine
     def insert_maintenance(record)
       body = MaintenanceDecorator.new(record)
       @client.post("#{base_url}/issues.json", json: { issue: body.as_json(@image_token) })
+    end
+
+    def insert_properties(record)
+      body = PropertiesDecorator.new(record)
+      @client.post("#{base_url}/projects.json", json: { project: body.project_json })
     end
 
     def issues_by_project_id(id, options = {})
