@@ -66,6 +66,16 @@ module LarvataMine
       @client.get("#{base_url}/projects.json", params: options)
     end
 
+    def issues_attribute(options = {})
+      options = query_defaults.merge(options)
+      @client.get("#{base_url}/issues.json", params: options)
+    end
+
+    def search_attribute(attribute, options = {})
+      options = query_defaults.merge(options)
+      @client.get("#{base_url}/#{attribute}.json", params: options)
+    end
+
     def custom_fields_attribute
       @client.get("#{base_url}/custom_fields.json")
     end
@@ -74,9 +84,12 @@ module LarvataMine
       @client.get("#{base_url}/trackers.json")
     end
 
-    def search_attribute(target, options = {})
-      options = query_defaults.merge(options)
-      @client.get("#{base_url}/#{target}.json", params: options)
+    def issues_update(id, options = {})
+      @client.put("#{base_url}/issues/#{id}.json", json: { issue: options })
+    end
+
+    def attribute_update(id, attribute, options = {})
+      @client.put("#{base_url}/#{attribute}/#{id}.json", json: options)
     end
 
     private
