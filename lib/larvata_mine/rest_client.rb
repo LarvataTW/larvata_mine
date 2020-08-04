@@ -1,7 +1,7 @@
 require 'http'
 require 'larvata_mine/maintenance_decorator'
 require 'larvata_mine/properties_decorator'
-require 'larvata_mine/estimate_item'
+require 'larvata_mine/issue_item_decorator'
 
 module LarvataMine
   class RestClient
@@ -30,6 +30,16 @@ module LarvataMine
       @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
     end
 
+    def insert_certificate_payments(record, custom_fields = {})
+      body = CertificatePaymentsDecorator.new(record)
+      @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
+    end
+
+    def insert_const_methods(record, custom_fields = {})
+      body = ConstMethodsDecorator.new(record)
+      @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
+    end
+
     def insert_properties(record)
       body = PropertiesDecorator.new(record)
       @client.post("#{base_url}/projects.json", json: { project: body.as_json })
@@ -41,26 +51,6 @@ module LarvataMine
       @client.get("#{base_url}/issues.json", params: options)
     end
 
-    def get_projects(options = {})
-      options = query_defaults.merge(options)
-      @client.get("#{base_url}/projects.json", params: options)
-    end
-
-    def get_custom_field(options = {})
-      options = query_defaults.merge(options)
-      @client.get("#{base_url}/custom_fields.json", params: options)
-    end
-
-    def get_tracker(options = {})
-      options = query_defaults.merge(options)
-      @client.get("#{base_url}/trackers.json", params: options)
-    end
-
-    def free_search(target, options = {})
-      options = query_defaults.merge(options)
-      @client.get("#{base_url}/#{target}.json", params: options)
-    end
-
     def upload_file(record, url = {})
       record.attachments.each do |image|
         file_location = url.present? ? url[image.id] : check_attachment_detail(image)
@@ -69,6 +59,24 @@ module LarvataMine
         respone = @uploads.post('https://redmine.pingshih.com/uploads.json', body: File.open(file_location))
         @image_token[image.id] = JSON.parse(respone)['upload']['token']
       end
+    end
+
+    def projects_attribute(options = {})
+      options = query_defaults.merge(options)
+      @client.get("#{base_url}/projects.json", params: options)
+    end
+
+    def custom_fields_attribute
+      @client.get("#{base_url}/custom_fields.json")
+    end
+
+    def tracker_attribute
+      @client.get("#{base_url}/trackers.json")
+    end
+
+    def search_attribute(target, options = {})
+      options = query_defaults.merge(options)
+      @client.get("#{base_url}/#{target}.json", params: options)
     end
 
     private
@@ -84,7 +92,7 @@ module LarvataMine
     def query_defaults
       {
         offset: 0,
-        limit: 50,
+        limit: 100
       }
     end
 
