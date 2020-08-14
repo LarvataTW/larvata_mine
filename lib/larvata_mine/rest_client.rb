@@ -17,7 +17,6 @@ module LarvataMine
       @client = HTTP.headers('X-Redmine-API-Key' => api_key).timeout(timeout)
       @uploads = HTTP.headers('X-Redmine-API-Key' => api_key, 'Content-Type' => 'application/octet-stream')
                      .timeout(timeout)
-      @image_token = {}
     end
 
     def insert_maintenance(record)
@@ -25,18 +24,8 @@ module LarvataMine
       @client.post("#{base_url}/issues.json", json: { issue: body.as_json(@image_token) })
     end
 
-    def insert_estimate_item(record, custom_fields = {})
-      body = EstimateItemDecorator.new(record)
-      @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
-    end
-
-    def insert_certificate_payments(record, custom_fields = {})
-      body = CertificatePaymentsDecorator.new(record)
-      @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
-    end
-
-    def insert_const_methods(record, custom_fields = {})
-      body = ConstMethodsDecorator.new(record)
+    def insert_issue_item(record, custom_fields = {})
+      body = IssueItemDecorator.new(record)
       @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
     end
 
@@ -51,14 +40,8 @@ module LarvataMine
       @client.get("#{base_url}/issues.json", params: options)
     end
 
-    def upload_file(record, url = {})
-      record.attachments.each do |image|
-        file_location = url.present? ? url[image.id] : check_attachment_detail(image)
-        raise ArgumentError, 'File Location Fail' if file_location.nil?
-
-        respone = @uploads.post('https://redmine.pingshih.com/uploads.json', body: File.open(file_location))
-        @image_token[image.id] = JSON.parse(respone)['upload']['token']
-      end
+    def upload_file(file_location)
+      @uploads.post("#{base_url}/uploads.json", body: File.open(file_location))
     end
 
     def projects_attribute(options = {})
@@ -96,9 +79,9 @@ module LarvataMine
 
     def client_defaults
       {
-        api_key: ENV["REDMINE_API_KEY"],
-        base_url: ENV["REDMINE_BASE_URL"],
-        timeout: ENV["REDMINE_REQUEST_TIMEOUT"].to_i,
+        api_key: ENV['REDMINE_API_KEY'],
+        base_url: ENV['REDMINE_BASE_URL'],
+        timeout: ENV['REDMINE_REQUEST_TIMEOUT'].to_i
       }
     end
 
@@ -107,12 +90,6 @@ module LarvataMine
         offset: 0,
         limit: 100
       }
-    end
-
-    def check_attachment_detail(image)
-      return if image.attachment.nil? || image.attachment_file_name.nil?
-
-      "./public#{image.attachment.url.match(/.+\//)[0]}#{image.attachment_file_name}"
     end
   end
 end
