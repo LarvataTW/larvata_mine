@@ -59,16 +59,15 @@ module LarvataMine
       ]
     end
 
-    def as_json(image_token)
+    def as_json(custom_fields)
       {
         project_id: project_id,
         tracker_id: tracker_id,
         status_id: 1,
         subject: subject,
         description: description,
-        custom_fields: custom_fields,
-        uploads: image_json(image_token)
-      }
+        custom_fields: custom_fields
+      }.merge(custom_fields)
     end
 
     private
@@ -98,16 +97,6 @@ module LarvataMine
           # 描述：#{item.content}
         TEXT
       end.join("\n")
-    end
-
-    def image_json(token)
-      return unless token.present?
-
-      attachments.reduce([]) do |ary, image|
-        ary << { token: token[image.id],
-                 filename: image.attachment_file_name,
-                 content_type: image.attachment_content_type }
-      end
     end
 
     def_delegator :property, :name, :property_name
