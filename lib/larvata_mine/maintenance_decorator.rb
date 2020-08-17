@@ -59,7 +59,7 @@ module LarvataMine
       ]
     end
 
-    def as_json(custom_fields)
+    def as_json(upload_columns)
       {
         project_id: project_id,
         tracker_id: tracker_id,
@@ -67,7 +67,7 @@ module LarvataMine
         subject: subject,
         description: description,
         custom_fields: custom_fields
-      }.merge(custom_fields)
+      }.merge(upload_columns)
     end
 
     private

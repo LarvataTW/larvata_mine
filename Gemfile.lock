@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    larvata_mine (1.0.11)
+    larvata_mine (1.0.12)
       http
 
 GEM

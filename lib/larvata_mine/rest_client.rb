@@ -19,9 +19,9 @@ module LarvataMine
                      .timeout(timeout)
     end
 
-    def insert_maintenance(record, custom_fields = {})
+    def insert_maintenance(record, upload_columns = {})
       body = MaintenanceDecorator.new(record)
-      @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
+      @client.post("#{base_url}/issues.json", json: { issue: body.as_json(upload_columns) })
     end
 
     def insert_issue_item(record, custom_fields = {})
