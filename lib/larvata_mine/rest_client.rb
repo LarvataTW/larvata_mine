@@ -1,6 +1,5 @@
 require 'http'
 require 'larvata_mine/maintenance_decorator'
-require 'larvata_mine/properties_decorator'
 require 'larvata_mine/issue_item_decorator'
 
 module LarvataMine
@@ -29,9 +28,9 @@ module LarvataMine
       @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
     end
 
-    def insert_properties(record)
-      body = PropertiesDecorator.new(record)
-      @client.post("#{base_url}/projects.json", json: { project: body.as_json })
+    def insert_project(options = {})
+      body = post_defaults.merge(options)
+      @client.post("#{base_url}/projects.json", json: { project: body })
     end
 
     def issues_by_project_id(id, options = {})
@@ -60,7 +59,7 @@ module LarvataMine
     end
 
     def insert_attribute(attribute, options = {})
-      @client.post("#{base_url}/#{attribute}.json", params: options)
+      @client.post("#{base_url}/#{attribute}.json", json: options)
     end
 
     def custom_fields_attribute
@@ -93,6 +92,13 @@ module LarvataMine
       {
         offset: 0,
         limit: 100
+      }
+    end
+
+    def post_defaults
+      {
+        is_public: true,
+        inherit_members: true
       }
     end
   end
