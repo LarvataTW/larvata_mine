@@ -59,6 +59,11 @@ module LarvataMine
       @client.get("#{base_url}/#{attribute}.json", params: options)
     end
 
+    def insert_attribute(attribute, options = {})
+      options = query_defaults.merge(options)
+      @client.post("#{base_url}/#{attribute}.json", params: options)
+    end
+
     def custom_fields_attribute
       @client.get("#{base_url}/custom_fields.json")
     end
