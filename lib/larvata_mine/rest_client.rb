@@ -28,8 +28,13 @@ module LarvataMine
       @client.post("#{base_url}/issues.json", json: { issue: body.as_json(custom_fields) })
     end
 
+    def insert_issue(options = {})
+      body = issue_defaults.merge(options)
+      @client.post("#{base_url}/issues.json", json: { issue: body })
+    end
+
     def insert_project(options = {})
-      body = post_defaults.merge(options)
+      body = project_defaults.merge(options)
       @client.post("#{base_url}/projects.json", json: { project: body })
     end
 
@@ -95,10 +100,16 @@ module LarvataMine
       }
     end
 
-    def post_defaults
+    def project_defaults
       {
         is_public: true,
         inherit_members: true
+      }
+    end
+
+    def issue_defaults
+      {
+        is_public: true,
       }
     end
   end
